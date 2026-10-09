@@ -99,10 +99,17 @@ const chatbotToggle = document.querySelector("[data-chatbot-toggle]");
 const chatbotPanel = document.querySelector("[data-chatbot-panel]");
 const chatbotClose = document.querySelector("[data-chatbot-close]");
 const chatbotMessages = document.querySelector("[data-chat-messages]");
-const chatbotPrompts = document.querySelector("[data-chat-prompts]");
+const chatbotMenuToggle = document.querySelector("[data-chatbot-menu-toggle]");
+const chatbotFaqMenu = document.querySelector("[data-chatbot-faq-menu]");
+const chatbotPrompts = document.querySelectorAll("[data-chat-question]");
 const chatbotForm = document.querySelector("[data-chat-form]");
 const chatbotInput = chatbotForm?.elements.namedItem("question");
 const chatbotContactActions = document.querySelector("[data-chat-contact-actions]");
+const shouldAutoFocusChatInput = () => window.matchMedia("(min-width: 700px)").matches;
+
+function focusChatInputOnDesktop() {
+  if (shouldAutoFocusChatInput()) chatbotInput?.focus();
+}
 
 function buildChatContactActions() {
   if (!chatbotContactActions) return;
@@ -158,11 +165,13 @@ function submitChatQuestion(question) {
   const cleanQuestion = question.trim();
   if (!cleanQuestion) return;
   appendChatMessage(cleanQuestion, "user");
-  if (chatbotPrompts) chatbotPrompts.hidden = true;
+  chatbotFaqMenu.hidden = true;
+  chatbotMenuToggle?.setAttribute("aria-expanded", "false");
+  chatbotMenuToggle?.setAttribute("aria-label", "Open FAQ menu");
   appendChatMessage(answerCommonQuestion(cleanQuestion), "bot");
   if (chatbotInput) {
     chatbotInput.value = "";
-    chatbotInput.focus();
+    focusChatInputOnDesktop();
   }
 }
 
@@ -171,14 +180,20 @@ chatbotToggle?.addEventListener("click", () => {
   const opening = chatbotPanel.hidden;
   chatbotPanel.hidden = !opening;
   chatbotToggle.setAttribute("aria-expanded", String(opening));
-  if (opening) chatbotInput?.focus();
+  if (opening) focusChatInputOnDesktop();
 });
 chatbotClose?.addEventListener("click", () => {
   chatbotPanel.hidden = true;
   chatbotToggle?.setAttribute("aria-expanded", "false");
   chatbotToggle?.focus();
 });
-chatbotPrompts?.querySelectorAll("[data-chat-question]").forEach((button) => {
+chatbotMenuToggle?.addEventListener("click", () => {
+  const opening = chatbotFaqMenu.hidden;
+  chatbotFaqMenu.hidden = !opening;
+  chatbotMenuToggle.setAttribute("aria-expanded", String(opening));
+  chatbotMenuToggle.setAttribute("aria-label", opening ? "Close FAQ menu" : "Open FAQ menu");
+});
+chatbotPrompts.forEach((button) => {
   button.addEventListener("click", () => submitChatQuestion(button.dataset.chatQuestion));
 });
 chatbotForm?.addEventListener("submit", (event) => {

@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20261009-8" />
-    <script src="app.js?v=20261009-8" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20261009-10" />
+    <script src="app.js?v=20261009-10" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -136,11 +136,15 @@
         <header class="chatbot-header">
           <span class="chatbot-brand-mark" aria-hidden="true">YL<span>.</span></span>
           <div><small>HOME &amp; PROPERTY SERVICES</small><strong id="chatbot-title">YL Alvarez assistant</strong><span class="chatbot-status"><i></i> Here to help</span></div>
+          <button class="chatbot-menu-toggle" type="button" data-chatbot-menu-toggle aria-expanded="false" aria-controls="chatbot-faq-menu" aria-label="Open FAQ menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h14"/></svg></button>
           <button class="chatbot-close" type="button" data-chatbot-close aria-label="Close chat">×</button>
         </header>
         <div class="chatbot-messages" data-chat-messages role="log" aria-live="polite" aria-relevant="additions">
           <div class="chat-message chatbot-message">Hi! I can answer common questions about services, the Tampa service area and getting a project started.</div>
-          <div class="chatbot-prompts" data-chat-prompts aria-label="Frequently asked questions">
+        </div>
+        <div class="chatbot-faq-menu" id="chatbot-faq-menu" data-chatbot-faq-menu hidden>
+          <small>QUICK QUESTIONS</small>
+          <div class="chatbot-prompts" aria-label="Frequently asked questions">
             <button type="button" data-chat-question="What services do you offer?">Services</button>
             <button type="button" data-chat-question="What areas do you serve?">Service area</button>
             <button type="button" data-chat-question="How do I get an estimate?">Estimates</button>
