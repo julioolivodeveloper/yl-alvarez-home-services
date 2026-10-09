@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20261009-5" />
-    <script src="app.js?v=20261009-5" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20261009-7" />
+    <script src="app.js?v=20261009-7" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -38,8 +38,11 @@
             <div class="hero-foot"><span class="foot-rule"></span><span>Interior <b>·</b> Exterior <b>·</b> New construction</span></div>
           </div>
           <figure class="hero-visual">
-            <img src="assets/ay/outdoor-kitchen.jpg" alt="Paver patio and covered outdoor kitchen" fetchpriority="high" />
-            <span class="visual-index">TAMPA BAY <b>/</b> PROPERTY WORK</span>
+            <div class="hero-image-rotator" data-hero-rotator aria-label="Selected YL Alvarez home and property projects">
+              <img class="hero-image-layer is-active" data-hero-image src="assets/ay/outdoor-kitchen.jpg" alt="Paver patio and covered outdoor kitchen" fetchpriority="high" />
+              <img class="hero-image-layer" data-hero-image alt="" aria-hidden="true" />
+            </div>
+            <span class="visual-index">TAMPA BAY <b>/</b> <span data-hero-count>PROJECT 01 / 04</span></span>
             <figcaption><span class="caption-square">YL</span><span>One team for the details<br /><strong>inside and out.</strong></span><span class="caption-arrow">↗</span></figcaption>
             <div class="visual-stamp" aria-hidden="true"><span>HOME<br />&amp; PROPERTY</span><b>YL</b></div>
           </figure>

@@ -14,6 +14,47 @@ const photoDialog = document.querySelector("[data-photo-dialog]");
 const photoDialogImage = document.querySelector("[data-photo-dialog-image]");
 const photoDialogCaption = document.querySelector("[data-photo-dialog-caption]");
 
+const heroSlides = [
+  { src: "assets/ay/outdoor-kitchen.jpg", alt: "Paver patio and covered outdoor kitchen" },
+  { src: "assets/ay/landscape-border.jpg", alt: "Landscaped garden border with pavers and greenery" },
+  { src: "assets/ay/poolside-planting.jpg", alt: "Poolside planting and finished outdoor living area" },
+  { src: "assets/ay/paver-installation.jpg", alt: "Paver installation in progress on a residential walkway" }
+];
+const heroLayers = [...document.querySelectorAll("[data-hero-image]")];
+const heroCount = document.querySelector("[data-hero-count]");
+
+if (heroLayers.length === 2 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const preloadedSlides = heroSlides.map(({ src }) => {
+    const image = new Image();
+    image.src = src;
+    return image;
+  });
+  let currentSlide = 0;
+  let activeLayer = 0;
+
+  window.setInterval(async () => {
+    const nextSlide = (currentSlide + 1) % heroSlides.length;
+    const nextLayer = 1 - activeLayer;
+    try {
+      await preloadedSlides[nextSlide].decode();
+    } catch {
+      // Keep the current project photo visible if a slide fails to load.
+      return;
+    }
+    const incoming = heroLayers[nextLayer];
+    const outgoing = heroLayers[activeLayer];
+    incoming.src = heroSlides[nextSlide].src;
+    incoming.alt = heroSlides[nextSlide].alt;
+    incoming.removeAttribute("aria-hidden");
+    outgoing.setAttribute("aria-hidden", "true");
+    incoming.classList.add("is-active");
+    outgoing.classList.remove("is-active");
+    if (heroCount) heroCount.textContent = `PROJECT ${String(nextSlide + 1).padStart(2, "0")} / ${String(heroSlides.length).padStart(2, "0")}`;
+    currentSlide = nextSlide;
+    activeLayer = nextLayer;
+  }, 6000);
+}
+
 function cleanPhone(value) {
   return value.replace(/\D/g, "");
 }
