@@ -15,7 +15,7 @@ Then open `http://localhost:4182`.
 ## Project notes
 
 - Verify captions and service groupings for the client-supplied photos in `assets/ay/`.
-- Add the verified business phone, WhatsApp number and email to `BUSINESS_CONTACT` in `app.js`.
+- The contact popup and project inquiry form are connected to the business phone and WhatsApp number in `app.js`.
 - Confirm the exact business spelling, service wording, travel radius and any licensing details.
 
 The form creates a WhatsApp, SMS or email draft after a contact destination is configured. In this local draft, it does not send or store visitor information.

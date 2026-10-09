@@ -1,7 +1,6 @@
-/* Add the verified business phone, WhatsApp number and email here before launch. */
 const BUSINESS_CONTACT = {
-  phone: "",
-  whatsapp: "",
+  phone: "+1 813 298 7166",
+  whatsapp: "+1 813 298 7166",
   email: ""
 };
 
@@ -22,11 +21,13 @@ function cleanPhone(value) {
 function makeContactActions() {
   const options = [];
   if (BUSINESS_CONTACT.phone) {
-    options.push({ label: "Call YL Alvarez", detail: BUSINESS_CONTACT.phone, href: `tel:${cleanPhone(BUSINESS_CONTACT.phone)}`, icon: "☎" });
-    options.push({ label: "Send a text", detail: "Start a text message", href: `sms:${cleanPhone(BUSINESS_CONTACT.phone)}`, icon: "✉" });
+    options.push({ label: "Send a text", detail: BUSINESS_CONTACT.phone, href: `sms:${cleanPhone(BUSINESS_CONTACT.phone)}`, icon: "✉" });
   }
   if (BUSINESS_CONTACT.whatsapp) {
-    options.push({ label: "WhatsApp", detail: "Message the business", href: `https://wa.me/${cleanPhone(BUSINESS_CONTACT.whatsapp)}`, icon: "↗" });
+    options.push({ label: "WhatsApp", detail: BUSINESS_CONTACT.whatsapp, href: `https://wa.me/${cleanPhone(BUSINESS_CONTACT.whatsapp)}`, icon: "↗" });
+  }
+  if (BUSINESS_CONTACT.phone) {
+    options.push({ label: "Call YL Alvarez", detail: BUSINESS_CONTACT.phone, href: `tel:${cleanPhone(BUSINESS_CONTACT.phone)}`, icon: "☎" });
   }
   if (BUSINESS_CONTACT.email) {
     options.push({ label: "Send an email", detail: BUSINESS_CONTACT.email, href: `mailto:${BUSINESS_CONTACT.email}`, icon: "@" });
@@ -45,8 +46,8 @@ function makeContactActions() {
 
   const hasContact = options.length > 0;
   dialogCopy.textContent = hasContact
-    ? "Choose the easiest way to reach YL Alvarez, or start with the project form."
-    : "The contact options are ready to connect. Start with the project form while the business phone, WhatsApp and email are being confirmed.";
+    ? "Choose how you would like to reach YL Alvarez, or share your project details below."
+    : "Share your project details below and we will follow up.";
   if (contactNote) contactNote.hidden = hasContact;
 }
 
@@ -67,7 +68,13 @@ mobileNav?.querySelectorAll("a").forEach((link) => link.addEventListener("click"
 }));
 
 document.querySelectorAll("[data-open-contact]").forEach((button) => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (mobileNav?.contains(button)) {
+      mobileNav.hidden = true;
+      menuButton?.setAttribute("aria-expanded", "false");
+      menuButton?.setAttribute("aria-label", "Open navigation");
+    }
     const service = button.dataset.service;
   if (service) {
       const select = form?.elements.namedItem("service");

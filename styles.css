@@ -506,6 +506,10 @@ button { color: inherit; }
 .contact-dialog > p:not(.eyebrow) { font-size: 13px; }
 .dialog-action { font-size: 13px; }
 .photo-dialog figcaption { font-size: 12px; }
+.header-cta { border: 0; cursor: pointer; }
+.dialog-action { min-height: 64px; font-size: 14px; }
+.dialog-action > span:last-child { width: auto; height: auto; display: block; background: transparent; font-size: 14px; line-height: 1.35; }
+.dialog-action small { display: block; margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 500; }
 
 @media (max-width: 780px) {
   .topline { font-size: 10px; }
