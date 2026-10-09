@@ -94,6 +94,111 @@ function makeContactActions() {
 
 makeContactActions();
 
+const chatbotRoot = document.querySelector("[data-chatbot]");
+const chatbotToggle = document.querySelector("[data-chatbot-toggle]");
+const chatbotPanel = document.querySelector("[data-chatbot-panel]");
+const chatbotClose = document.querySelector("[data-chatbot-close]");
+const chatbotMessages = document.querySelector("[data-chat-messages]");
+const chatbotPrompts = document.querySelector("[data-chat-prompts]");
+const chatbotForm = document.querySelector("[data-chat-form]");
+const chatbotInput = chatbotForm?.elements.namedItem("question");
+const chatbotContactActions = document.querySelector("[data-chat-contact-actions]");
+
+function buildChatContactActions() {
+  if (!chatbotContactActions) return;
+  const phone = cleanPhone(BUSINESS_CONTACT.phone);
+  const whatsapp = cleanPhone(BUSINESS_CONTACT.whatsapp);
+  const options = [
+    ...(phone ? [{ label: "Text", icon: "✉", href: `sms:+${phone}` }] : []),
+    ...(whatsapp ? [{ label: "WhatsApp", icon: "↗", href: `https://wa.me/${whatsapp}`, external: true }] : []),
+    ...(phone ? [{ label: "Call", icon: "☎", href: `tel:+${phone}` }] : [])
+  ];
+  chatbotContactActions.replaceChildren(...options.map((option) => {
+    const link = document.createElement("a");
+    link.href = option.href;
+    link.innerHTML = `<span aria-hidden="true">${option.icon}</span>${option.label}`;
+    if (option.external) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    }
+    return link;
+  }));
+}
+
+function appendChatMessage(text, speaker) {
+  if (!chatbotMessages) return;
+  const message = document.createElement("div");
+  message.className = `chat-message ${speaker === "user" ? "chat-user-message" : "chatbot-message"}`;
+  message.textContent = text;
+  chatbotMessages.append(message);
+  chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+function answerCommonQuestion(question) {
+  const text = question.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  if (/service|offer|remodel|paver|landscap|paint|tile|floor|cabinet|pool|pergola|plumb|air condition|ac |window|door|screen/.test(text)) {
+    return "YL Alvarez helps with remodeling and painting; pavers and hardscape; landscaping and cleanup; patios, pools and pergolas. Other listed work includes tile and stone, cabinets, flooring, doors, windows, screens, plumbing, air conditioning, and new homes or efficiency units.";
+  }
+  if (/area|where|tampa|location|travel|zip|serve|near me/.test(text)) {
+    return "YL Alvarez is based in Tampa and serves nearby communities, with travel available up to about three hours from the area. Send your ZIP code by text or WhatsApp to ask about a specific location.";
+  }
+  if (/estimate|quote|price|cost|budget|pricing/.test(text)) {
+    return "To discuss an estimate, share the type of work, your location and a few project details. The team can review the scope and reply with next steps. Use the Text or WhatsApp button below.";
+  }
+  if (/process|how|start|begin|timeline|next step/.test(text)) {
+    return "Getting started is simple: share what you want to change, where the property is and your priorities. The team can review the work and materials with you, then discuss next steps.";
+  }
+  if (/contact|phone|call|whatsapp|text|message|talk|reach/.test(text)) {
+    return "Reach YL Alvarez at +1 (813) 298-7166. Choose Text, WhatsApp or Call below.";
+  }
+  return "I can help with services, the Tampa service area, estimates and how to get started. For a project-specific question, contact YL Alvarez using one of the buttons below.";
+}
+
+function submitChatQuestion(question) {
+  const cleanQuestion = question.trim();
+  if (!cleanQuestion) return;
+  appendChatMessage(cleanQuestion, "user");
+  if (chatbotPrompts) chatbotPrompts.hidden = true;
+  appendChatMessage(answerCommonQuestion(cleanQuestion), "bot");
+  if (chatbotInput) {
+    chatbotInput.value = "";
+    chatbotInput.focus();
+  }
+}
+
+buildChatContactActions();
+chatbotToggle?.addEventListener("click", () => {
+  const opening = chatbotPanel.hidden;
+  chatbotPanel.hidden = !opening;
+  chatbotToggle.setAttribute("aria-expanded", String(opening));
+  if (opening) chatbotInput?.focus();
+});
+chatbotClose?.addEventListener("click", () => {
+  chatbotPanel.hidden = true;
+  chatbotToggle?.setAttribute("aria-expanded", "false");
+  chatbotToggle?.focus();
+});
+chatbotPrompts?.querySelectorAll("[data-chat-question]").forEach((button) => {
+  button.addEventListener("click", () => submitChatQuestion(button.dataset.chatQuestion));
+});
+chatbotForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  submitChatQuestion(chatbotInput?.value || "");
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && chatbotPanel && !chatbotPanel.hidden) {
+    chatbotPanel.hidden = true;
+    chatbotToggle?.setAttribute("aria-expanded", "false");
+    chatbotToggle?.focus();
+  }
+});
+document.addEventListener("pointerdown", (event) => {
+  if (chatbotRoot && chatbotPanel && !chatbotPanel.hidden && !chatbotRoot.contains(event.target)) {
+    chatbotPanel.hidden = true;
+    chatbotToggle?.setAttribute("aria-expanded", "false");
+  }
+});
+
 const menuButton = document.querySelector("[data-menu-toggle]");
 const mobileNav = document.querySelector("#mobile-nav");
 menuButton?.addEventListener("click", () => {
@@ -237,12 +342,3 @@ document.querySelectorAll("[data-comparison]").forEach((stage) => {
     update(min + Math.max(0, Math.min(1, progress)) * (max - min));
   });
 });
-
-const floatingContact = document.querySelector(".floating-contact");
-const contactSection = document.querySelector("#contact");
-if (floatingContact && contactSection && "IntersectionObserver" in window) {
-  const contactObserver = new IntersectionObserver(([entry]) => {
-    floatingContact.classList.toggle("is-obscured", entry.isIntersecting);
-  }, { threshold: 0.12 });
-  contactObserver.observe(contactSection);
-}

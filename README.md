@@ -16,9 +16,10 @@ Then open `http://localhost:4182`.
 
 - Verify captions and service groupings for the client-supplied photos in `assets/ay/`.
 - The contact popup and project inquiry form are connected to the business phone and WhatsApp number in `app.js`.
+- The floating chat assistant answers common questions about services, service area, estimates and next steps, and provides text, WhatsApp and call links.
 - Confirm the exact business spelling, service wording, travel radius and any licensing details.
 
-The form creates a WhatsApp, SMS or email draft after a contact destination is configured. In this local draft, it does not send or store visitor information.
+The project form opens a prepared WhatsApp message for review. The FAQ assistant uses on-page answers and does not store conversations.
 
 ## Client-provided media
 

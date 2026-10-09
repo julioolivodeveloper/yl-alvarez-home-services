@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=20261009-7" />
-    <script src="app.js?v=20261009-7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20261009-8" />
+    <script src="app.js?v=20261009-8" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -127,7 +127,35 @@
 
     <footer class="footer"><div class="wrap footer-main"><a class="brand brand-footer" href="#top"><span class="brand-mark">YL<span>.</span></span><span class="brand-name">ALVAREZ<strong>HOME &amp; PROPERTY SERVICES LLC</strong></span></a><p>One team for the home<br />and the property around it.</p><nav aria-label="Footer navigation"><a href="#services">Services</a><a href="#work">Our work</a><a href="#approach">How we work</a><a href="#service-area">Service area</a><a href="#contact">Contact</a></nav></div><div class="wrap footer-bottom"><span>© <span data-year>2026</span> YL Alvarez Home &amp; Property Services LLC</span><a href="#top">Back to top ↑</a></div><div class="image-credit wrap">Project photos supplied for the YL Alvarez website draft.</div></footer>
 
-    <button class="floating-contact" type="button" data-open-contact aria-haspopup="dialog" aria-controls="contact-dialog"><span class="chat-icon" aria-hidden="true">↗</span><span>Plan a project</span></button>
+    <div class="chat-assistant" data-chatbot>
+      <button class="chatbot-launcher" type="button" data-chatbot-toggle aria-expanded="false" aria-controls="faq-chat-panel">
+        <span class="chatbot-launcher-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5 8 8 0 0 1-3.4-.75L4 20l1.75-4.25A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8.5 11.5h7M8.5 14.5h4"/></svg></span>
+        <span>Ask YL Alvarez</span><i class="chatbot-online-dot" aria-hidden="true"></i>
+      </button>
+      <section class="chatbot-panel" id="faq-chat-panel" role="dialog" aria-modal="false" aria-labelledby="chatbot-title" data-chatbot-panel hidden>
+        <header class="chatbot-header">
+          <span class="chatbot-brand-mark" aria-hidden="true">YL<span>.</span></span>
+          <div><small>HOME &amp; PROPERTY SERVICES</small><strong id="chatbot-title">YL Alvarez assistant</strong><span class="chatbot-status"><i></i> Here to help</span></div>
+          <button class="chatbot-close" type="button" data-chatbot-close aria-label="Close chat">×</button>
+        </header>
+        <div class="chatbot-messages" data-chat-messages role="log" aria-live="polite" aria-relevant="additions">
+          <div class="chat-message chatbot-message">Hi! I can answer common questions about services, the Tampa service area and getting a project started.</div>
+          <div class="chatbot-prompts" data-chat-prompts aria-label="Frequently asked questions">
+            <button type="button" data-chat-question="What services do you offer?">Services</button>
+            <button type="button" data-chat-question="What areas do you serve?">Service area</button>
+            <button type="button" data-chat-question="How do I get an estimate?">Estimates</button>
+            <button type="button" data-chat-question="How does the process work?">How it works</button>
+          </div>
+        </div>
+        <div class="chatbot-contact-block"><small>CONTACT THE TEAM</small><div class="chatbot-contact-actions" data-chat-contact-actions></div></div>
+        <form class="chatbot-form" data-chat-form>
+          <label class="visually-hidden" for="chatbot-question">Ask a question</label>
+          <input id="chatbot-question" name="question" type="text" placeholder="Type your question…" autocomplete="off" />
+          <button type="submit" aria-label="Send question">Send <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="chatbot-note">Quick answers based on the information on this site.</p>
+      </section>
+    </div>
     <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="dialog-title"><button class="dialog-close" type="button" data-close-dialog aria-label="Close contact dialog">×</button><p class="eyebrow"><span class="eyebrow-mark"></span> YL ALVAREZ / LET'S CONNECT</p><h2 id="dialog-title">Tell us what you're<br /><em>working on.</em></h2><p data-dialog-copy>Choose a contact option or start with the project form. Business contact details are ready to add.</p><div class="dialog-actions" data-dialog-actions></div><a class="button button-dark dialog-form-link" href="#contact" data-dialog-form>Share project details <span>↘</span></a></dialog>
     <dialog class="photo-dialog" data-photo-dialog aria-label="Project photo"><button class="dialog-close" type="button" data-close-photo aria-label="Close photo">×</button><figure><img data-photo-dialog-image alt="" /><figcaption data-photo-dialog-caption></figcaption></figure></dialog>
   </body>
